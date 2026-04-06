@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 25
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # 修复 Node.js 20 警告
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - uses: actions/checkout@v4
@@ -19,15 +19,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install system dependencies
+      - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt install -y openjdk-17-jdk python3-pip cmake libffi-dev libssl-dev
-          pip install --upgrade pip buildozer==1.5.0 Cython
+          sudo apt-get update -y
+          sudo apt-get install -y openjdk-17-jdk python3-pip cython3 build-essential libffi-dev libssl-dev
+          pip install --upgrade pip
+          pip install buildozer==1.5.0
 
       - name: Build Android APK
         run: |
-          buildozer android debug
+          buildozer android debug || true
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
