@@ -1,0 +1,55 @@
+name: Build HCIE APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y git zip unzip openjdk-17-jdk wget
+        pip install buildozer cython==0.29.36
+    
+    - name: Cache Buildozer
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.buildozer
+          ~/.gradle
+        key: buildozer-${{ runner.os }}
+    
+    - name: Build APK
+      run: |
+        buildozer init
+        sed -i 's/title = My Application/title = HCIE备考助手/' buildozer.spec
+        sed -i 's/package.name = myapp/package.name = hcie_tracker/' buildozer.spec
+        sed -i 's/package.domain = org.test/package.domain = org.hcie/' buildozer.spec
+        sed -i 's/source.include_exts = py,png,jpg,kv,atlas/source.include_exts = py,png,jpg,kv,atlas,json/' buildozer.spec
+        sed -i 's/requirements = python3,kivy/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
+        sed -i 's/android.api = 31/android.api = 33/' buildozer.spec
+        sed -i 's/android.minapi = 21/android.minapi = 24/' buildozer.spec
+        sed -i 's/android.ndk = 25b/android.ndk = 25.2.9519653/' buildozer.spec
+        sed -i 's/android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
+        echo 'android.permissions = VIBRATE,INTERNET,WAKE_LOCK,ACCESS_NETWORK_STATE' >> buildozer.spec
+        buildozer android debug
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: HCIE-APK
+        path: bin/*.apk
