@@ -1,7 +1,7 @@
 [app]
 title = HCIETracker
-package.name = hcietracker
-package.domain = org.hcie
+package.name = hcie
+package.domain = org.app
 source.dir = .
 version = 1.0
 
