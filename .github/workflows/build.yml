@@ -1,37 +1,36 @@
 name: Build APK
-
 on:
   push:
     branches: [ main ]
-
 jobs:
   build:
     runs-on: ubuntu-22.04
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Install dependencies
+      - name: 安装系统依赖（Buildozer 必备）
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y openjdk-17-jdk python3-pip cython3 build-essential libffi-dev libssl-dev
-          pip install --upgrade pip
-          pip install buildozer==1.5.0
-
-      - name: Build Android APK
+          sudo apt update -y
+          sudo apt install -y openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --upgrade pip Cython==3.0.10 buildozer==1.4.0
+      - name: 执行 Buildozer 打包（强制输出日志）
         run: |
-          buildozer android debug || true
-
-      - name: Upload APK
+          buildozer android debug > build.log 2>&1
+          cat build.log
+      - name: 上传日志（排查问题用）
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-Log
+          path: build.log
+      - name: 上传 APK（如果生成）
         uses: actions/upload-artifact@v4
         with:
           name: HCIE-Tracker-APK
           path: bin/*.apk
+          if: success()
