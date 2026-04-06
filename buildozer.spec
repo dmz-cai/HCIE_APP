@@ -12,22 +12,19 @@ package.domain = org.hcie
 # (str) Source code where the main.py live
 source = .
 
-# (list) Source files to include (let empty to include all the files)
+# (list) Source files to include
 source.include_exts = py,png,jpg,kv,atlas,json
 
 # (str) Application versioning
 version = 1.0.0
 
-# (list) Application requirements
-requirements = python3,kivy==2.3.0,kivymd,pillow
-
-# (str) Presplash of the application
-#presplash.filename = %(source.dir)s/presplash.png
+# (list) Application requirements - 使用稳定版本
+requirements = python3,kivy==2.2.1,kivymd==1.1.1,pillow
 
 # (str) Icon of the application
 icon.filename = %(source.dir)s/icon.png
 
-# (str) Supported orientation (landscape, portrait or all)
+# (str) Supported orientation
 orientation = portrait
 
 # (bool) Indicate if the application should be fullscreen or not
@@ -36,20 +33,26 @@ fullscreen = 0
 # (list) Permissions
 android.permissions = VIBRATE,INTERNET,WAKE_LOCK,ACCESS_NETWORK_STATE
 
-# (int) Target Android API, should be as high as possible.
+# (int) Target Android API
 android.api = 33
 
-# (int) Minimum API your APK will support.
+# (int) Minimum API your APK will support
 android.minapi = 24
 
 # (str) Android NDK version to use
-android.ndk = 25.2.9519653
+android.ndk = 25b
 
 # (bool) If True, then skip trying to update the Android sdk
 android.skip_update = False
 
 # (bool) If True, then automatically accept SDK license agreements
 android.accept_sdk_license = True
+
+# (str) Android arch
+android.archs = arm64-v8a
+
+# (bool) enables Android auto backup feature (Android API >=23)
+android.allow_backup = True
 
 [buildozer]
 
