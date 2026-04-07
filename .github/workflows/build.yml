@@ -45,7 +45,15 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install buildozer cython==0.29.36 pillow
+        pip install cython==0.29.36
+        pip install buildozer
+        pip install pillow
+    
+    - name: Verify Cython installation
+      run: |
+        which cython
+        cython --version
+        pip show cython
     
     - name: Show buildozer spec
       run: |
