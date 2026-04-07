@@ -1,64 +1,20 @@
 [app]
-
-# (str) Title of your application
-title = HCIE备考助手
-
-# (str) Package name
-package.name = hcie_tracker
-
-# (str) Package domain (needed for android/ios packaging)
+title = HCIETracker
+package.name = hcietracker
 package.domain = org.hcie
-
-# (str) Source code where the main.py live
-source = .
 source.dir = .
-
-# (list) Source files to include
-source.include_exts = py,png,jpg,kv,atlas,json
-
-# (str) Application versioning
-version = 1.0.0
-
-# (list) Application requirements - 使用稳定版本
-requirements = python3,kivy==2.2.1,kivymd==1.1.1,pillow
-
-# (str) Icon of the application
-icon.filename = %(source.dir)s/icon.png
-
-# (str) Supported orientation
+source.include_exts = py,png,jpg
+version = 1.0
+# 核心：指定稳定的依赖版本，避免编译冲突
+requirements = python3==3.11.4,kivy==2.3.0,kivymd==1.2.0,pillow==10.2.0
 orientation = portrait
-
-# (bool) Indicate if the application should be fullscreen or not
 fullscreen = 0
-
-# (list) Permissions
-android.permissions = VIBRATE,INTERNET,WAKE_LOCK,ACCESS_NETWORK_STATE
-
-# (int) Target Android API
+# Android 编译配置（稳定版，避免兼容性问题）
 android.api = 33
-
-# (int) Minimum API your APK will support
-android.minapi = 24
-
-# (str) Android NDK version to use
-android.ndk = 25b
-
-# (bool) If True, then skip trying to update the Android sdk
-android.skip_update = False
-
-# (bool) If True, then automatically accept SDK license agreements
+android.ndk = 25.1.9470188
+android.sdk = 24
 android.accept_sdk_license = True
-
-# (str) Android arch
+android.enable_androidx = True
 android.archs = arm64-v8a
-
-# (bool) enables Android auto backup feature (Android API >=23)
-android.allow_backup = True
-
-[buildozer]
-
-# (int) Log level (0 = error only, 1 = error, info, 2 = error, info, debug)
-log_level = 2
-
-# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
-warn_on_root = 1
+android.ndk_path = ~/.buildozer/android/platform/android-ndk-r25b
+android.sdk_path = ~/.buildozer/android/platform/android-sdk
