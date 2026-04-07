@@ -9,7 +9,24 @@
 - ❌ Docker Desktop 下载超时（网络太慢）
 - ❌ WSL 不可用（Hyper-V 未启用）
 
-## 方案一：Kivy Launcher（推荐，最简单！）
+## 当前状态（2026-04-07 晚）
+
+网络仍然无法访问外网（GitHub、Google 都超时）。
+所有代理端口（10800-10809, 7890-7891, 8080, 8118）测试均失败。
+
+### 已完成
+- ✅ Python 3.10.11 + Kivy + KivyMD + Buildozer 安装完成
+- ✅ 应用在 Windows 运行正常
+- ✅ buildozer.spec 修复完成
+
+### 待完成（需要网络）
+- ❌ GitHub 代码推送
+- ❌ GitHub Actions 自动构建
+- ❌ Docker 本地编译
+
+---
+
+## 🚀 立即可用方案：Kivy Launcher（无需网络）
 
 不需要编译 APK，直接在手机上运行 Python 代码！
 

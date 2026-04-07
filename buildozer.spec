@@ -11,6 +11,7 @@ package.domain = org.hcie
 
 # (str) Source code where the main.py live
 source = .
+source.dir = .
 
 # (list) Source files to include
 source.include_exts = py,png,jpg,kv,atlas,json
